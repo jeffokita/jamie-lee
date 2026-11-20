@@ -107,7 +107,7 @@
     const months = Math.round((best.d - first.d) / (1000 * 60 * 60 * 24 * 30.44));
     const pct = ((drop / first.s) * 100).toFixed(1);
     $("chart-intro").textContent =
-      `Solo HYROX Women division, all ${series.length} races. Lower is faster, so the chart is flipped: up means a quicker finish.`;
+      `Solo HYROX Women division, all ${series.length} races. Lower is faster, so the line drops as she gets quicker.`;
     $("chart-kpis").innerHTML = `
       <div class="kpi"><span class="kpi__k mono">FIRST</span><span class="kpi__v mono">${esc(first.r.time)}</span><span class="kpi__s">${esc(fmt(first.r.date, { month: "short", year: "numeric" }))}</span></div>
       <div class="kpi kpi--arrow" aria-hidden="true">→</div>
@@ -136,7 +136,7 @@
       const pad45 = 45 * 864e5;
       const x0 = +series[0].d - pad45, x1 = +series[series.length - 1].d + pad45;
       const X = (d) => m.l + ((+d - x0) / (x1 - x0)) * pw;
-      const Y = (s) => m.t + ((s - lo) / (hi - lo)) * ph; // faster (lower) times plot higher
+      const Y = (s) => m.t + ((hi - s) / (hi - lo)) * ph; // conventional axis: faster (lower) times plot lower
 
       let g = "";
       for (let s = lo; s <= hi; s += step) {
@@ -158,10 +158,10 @@
       // Direct labels: first race and PB only
       const fx = X(first.d), fy = Y(first.s), bx = X(best.d), by = Y(best.s);
       const labels = `
-        <text class="dlabel dlabel--sub" x="${fx - 6}" y="${fy - 32}">${esc(fmt(first.r.date, { month: "short", year: "numeric" }))}</text>
-        <text class="dlabel" x="${fx - 6}" y="${fy - 14}">${esc(first.r.time)}</text>
-        <text class="dlabel dlabel--pb" x="${bx}" y="${by - 30}" text-anchor="${small ? "end" : "middle"}">PB ${esc(best.r.time)}</text>
-        <text class="dlabel dlabel--sub" x="${bx}" y="${by - 15}" text-anchor="${small ? "end" : "middle"}">${esc(best.r.event.replace(/^HYROX\s+/, ""))} ${day(best.r.date).getFullYear()}</text>`;
+        <text class="dlabel dlabel--sub" x="${fx - 6}" y="${fy + (small ? 34 : 24)}">${esc(fmt(first.r.date, { month: "short", year: "numeric" }))}</text>
+        <text class="dlabel" x="${fx - 6}" y="${fy + (small ? 51 : 41)}">${esc(first.r.time)}</text>
+        <text class="dlabel dlabel--pb" x="${bx}" y="${by + 26}" text-anchor="${small ? "end" : "middle"}">PB ${esc(best.r.time)}</text>
+        <text class="dlabel dlabel--sub" x="${bx}" y="${by + 42}" text-anchor="${small ? "end" : "middle"}">${esc(best.r.event.replace(/^HYROX\s+/, ""))} ${day(best.r.date).getFullYear()}</text>`;
 
       // Delta bracket in right margin (desktop)
       let bracket = "";
@@ -170,8 +170,8 @@
         bracket = `
           <line class="guide" x1="${fx}" x2="${bxr}" y1="${fy}" y2="${fy}"/>
           <line class="guide" x1="${bx}" x2="${bxr}" y1="${by}" y2="${by}"/>
-          <line class="bracket" x1="${bxr}" x2="${bxr}" y1="${fy}" y2="${by + 8}"/>
-          <path class="bracket-head" d="M${bxr - 6},${by + 10} L${bxr},${by} L${bxr + 6},${by + 10} Z"/>
+          <line class="bracket" x1="${bxr}" x2="${bxr}" y1="${fy}" y2="${by - 8}"/>
+          <path class="bracket-head" d="M${bxr - 6},${by - 10} L${bxr},${by} L${bxr + 6},${by - 10} Z"/>
           <text class="dlabel" x="${bxr + 14}" y="${(fy + by) / 2 - 4}">−${fromSec(drop)}</text>
           <text class="dlabel dlabel--sub" x="${bxr + 14}" y="${(fy + by) / 2 + 13}">faster</text>`;
       }
@@ -182,7 +182,7 @@
         `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="chart-title chart-desc">
           <title id="chart-title">HYROX Women finish times, ${esc(fmt(first.r.date, { month: "short", year: "numeric" }))} to ${esc(fmt(best.r.date, { month: "short", year: "numeric" }))}</title>
           <desc id="chart-desc">Line chart of ${series.length} solo HYROX Women finishes. Times fall from ${esc(first.r.time)} to a personal best of ${esc(best.r.time)}, ${fromSec(drop)} faster. Full values in the data table below.</desc>
-          <text class="axis-t" x="${m.l}" y="${m.t - 16}">▲ FASTER · FINISH TIME (H:MM)</text>
+          <text class="axis-t" x="${m.l}" y="${m.t - 16}">FINISH TIME (H:MM) · LOWER IS FASTER ▼</text>
           ${g}
           ${bracket}
           <path class="line${drawn || reduce ? "" : " line--draw"}" d="${path}" pathLength="1"/>
