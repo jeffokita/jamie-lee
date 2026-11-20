@@ -17,12 +17,14 @@
       container.innerHTML = `<span>${esc(label || initials)}</span>`;
     };
     if (!src) return placeholder();
+    // Attach the <img> right away: Safari never loads a lazy image that isn't in the DOM.
     const img = new Image();
     img.alt = alt || "";
     img.loading = "lazy";
-    img.onload = () => { container.innerHTML = ""; container.appendChild(img); };
     img.onerror = placeholder;
     img.src = /^(https?:)?\/\//.test(src) ? src : "../" + src;
+    container.innerHTML = "";
+    container.appendChild(img);
   }
 
   // Meta & names
