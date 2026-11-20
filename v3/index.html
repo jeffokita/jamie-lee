@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Athlete Profile | Race Data</title>
+  <meta name="description" content="Hybrid racing athlete: race data, results, and sponsorship opportunities." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div id="draft-banner" class="draft" hidden>SAMPLE DATA: preview only</div>
+
+  <header class="topbar">
+    <a href="#top" class="topbar__brand"><span class="live-dot" aria-hidden="true"></span><span id="nav-name"></span></a>
+    <nav class="topbar__nav" aria-label="Sections">
+      <a href="#data">Data</a>
+      <a href="#results">Results</a>
+      <a href="#next">Next heat</a>
+      <a href="#partner">Partner</a>
+    </nav>
+    <a href="#contact" class="btn btn--sm">Sponsor</a>
+  </header>
+
+  <main id="main">
+    <!-- HERO: start-line graphic -->
+    <section class="hero" id="top" aria-labelledby="hero-name">
+      <div class="hero__copy">
+        <p class="kicker"><span class="tag tag--live">LIVE</span> <span id="hero-disc"></span></p>
+        <div class="hero__id">
+          <div class="bib" aria-hidden="true">
+            <span class="bib__top">HYROX</span>
+            <span class="bib__num">PRO</span>
+            <span class="bib__bot">WOMEN</span>
+          </div>
+          <h1 class="hero__name" id="hero-name"></h1>
+        </div>
+        <p class="hero__tag" id="hero-tagline"></p>
+
+        <div class="clock" id="hero-clock">
+          <div class="clock__head"><span>PB</span><span id="clock-div"></span></div>
+          <div class="clock__time mono" id="clock-time"></div>
+          <div class="clock__foot mono" id="clock-foot"></div>
+        </div>
+
+        <div class="hero__cta">
+          <a href="#contact" class="btn">Partner with <span class="js-first"></span></a>
+          <a href="#data" class="btn btn--ghost">View race data</a>
+        </div>
+      </div>
+      <figure class="hero__media hud" id="hero-media">
+        <figcaption class="hud__label mono">CAM 01 <span>// START LINE</span></figcaption>
+      </figure>
+    </section>
+
+    <!-- Stat strip + ticker -->
+    <section class="board" aria-label="Headline numbers">
+      <dl class="board__grid" id="stats"></dl>
+    </section>
+    <div class="ticker" aria-label="Career highlights">
+      <div class="ticker__track" id="ticker"></div>
+    </div>
+
+    <!-- BIO -->
+    <section class="sec" id="about" aria-labelledby="about-h">
+      <header class="sec__head">
+        <p class="sec__num mono">01 // ATHLETE</p>
+        <h2 id="about-h">Built in the cracks of the day.</h2>
+      </header>
+      <div class="about">
+        <figure class="about__photo hud" id="portrait">
+          <figcaption class="hud__label mono">CAM 02 <span>// HOME GYM</span></figcaption>
+        </figure>
+        <div class="about__body">
+          <div class="prose" id="bio"></div>
+          <div class="site-card" id="website"></div>
+        </div>
+        <aside class="about__log" aria-labelledby="log-h">
+          <h3 class="log__h mono" id="log-h">LAP LOG // HIGHLIGHTS</h3>
+          <ol class="log" id="highlights"></ol>
+        </aside>
+      </div>
+    </section>
+
+    <!-- INTERVIEW -->
+    <section class="quote" aria-label="Interview">
+      <div class="quote__inner" id="interview"></div>
+    </section>
+
+    <!-- PROGRESSION -->
+    <section class="sec" id="data" aria-labelledby="data-h">
+      <header class="sec__head">
+        <p class="sec__num mono">02 // TELEMETRY</p>
+        <h2 id="data-h">The clock keeps dropping.</h2>
+        <p class="sec__intro" id="chart-intro"></p>
+      </header>
+      <div class="chart-card">
+        <div class="chart-card__head" id="chart-kpis"></div>
+        <div class="chart" id="chart">
+          <div class="chart__tip mono" id="chart-tip" role="status" aria-live="polite" hidden></div>
+        </div>
+        <details class="chart__table">
+          <summary class="mono">View data table</summary>
+          <table class="mini-table" id="chart-table"></table>
+        </details>
+      </div>
+    </section>
+
+    <!-- PBs -->
+    <section class="sec sec--tight" aria-labelledby="pb-h">
+      <header class="sec__head">
+        <p class="sec__num mono">03 // SPLITS</p>
+        <h2 id="pb-h">Personal bests by division.</h2>
+      </header>
+      <div class="splits" id="pbs"></div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="sec" id="results" aria-labelledby="res-h">
+      <header class="sec__head">
+        <p class="sec__num mono">04 // OFFICIAL RESULTS</p>
+        <h2 id="res-h">Every finish, on the record.</h2>
+      </header>
+      <div class="printout">
+        <div class="printout__bar">
+          <span class="mono printout__title">RESULTS // <span id="res-count"></span></span>
+          <div class="filters" id="filters" role="group" aria-label="Filter results by division"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="results">
+            <caption class="sr-only">Race results. POS is finishing position in division.</caption>
+            <thead>
+              <tr><th scope="col">Date</th><th scope="col">Event</th><th scope="col">Division</th><th scope="col" class="num">Time</th><th scope="col" class="num">Pos</th></tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+        <p class="printout__foot mono">POS = finishing position in division &nbsp;·&nbsp; <span class="pb-flag">PB</span> = personal best</p>
+      </div>
+    </section>
+
+    <!-- NEXT HEAT -->
+    <section class="sec next" id="next" aria-labelledby="next-h">
+      <header class="sec__head">
+        <p class="sec__num mono">05 // NEXT HEAT</p>
+        <h2 id="next-h">On the start list.</h2>
+      </header>
+      <div class="next__grid">
+        <div class="countdown-card" id="countdown"></div>
+        <div class="heats">
+          <h3 class="log__h mono">HEAT SHEET // UPCOMING</h3>
+          <ol class="heat-list" id="upcoming"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTOS -->
+    <section class="sec sec--tight" aria-labelledby="ph-h">
+      <header class="sec__head sec__head--row">
+        <div>
+          <p class="sec__num mono">06 // RACE FEED</p>
+          <h2 id="ph-h">In the lanes.</h2>
+        </div>
+        <a class="btn btn--ghost" id="ig-highlights" target="_blank" rel="noopener">Race-day highlights on Instagram ↗</a>
+      </header>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- PARTNER CASE -->
+    <section class="sec partner" id="partner" aria-labelledby="partner-h">
+      <header class="sec__head">
+        <p class="sec__num mono">07 // SPONSOR BRIEF</p>
+        <h2 id="partner-h">Put your brand in <span class="js-first"></span>'s lane.</h2>
+        <p class="sec__intro" id="audience-summary"></p>
+      </header>
+
+      <div class="reach">
+        <dl class="reach__grid" id="audience"></dl>
+        <div class="proof" id="proof"></div>
+      </div>
+
+      <h3 class="sub-h mono">WHY PARTNER</h3>
+      <ol class="props" id="value"></ol>
+
+      <h3 class="sub-h mono">PARTNERSHIP TIERS</h3>
+      <div class="tiers" id="tiers"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact" aria-labelledby="contact-h">
+      <p class="sec__num mono">08 // FINISH LINE</p>
+      <h2 id="contact-h">Ready to race with <span class="js-first"></span>?</h2>
+      <p class="contact__lede">Tell us about your brand and what a great season looks like for you. Let’s build a partnership that shows up on the results sheet.</p>
+      <a class="contact__email mono" id="contact-email"></a>
+      <div class="contact__links" id="contact-links"></div>
+    </section>
+  </main>
+
+  <footer class="foot mono">
+    <span id="foot-name"></span> · <span id="foot-disc"></span>
+    <span class="foot__r">© <span id="year"></span></span>
+  </footer>
+
+  <script src="../data/jamie-lee.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

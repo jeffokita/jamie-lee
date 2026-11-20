@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jamie Lee | A Profile</title>
+  <meta name="description" content="A long-form profile of hybrid racer Jamie Lee: HYROX, Spartan DEKA and OCR, and an invitation to partner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the story</a>
+
+  <div id="draft-banner" class="draft" hidden>Sample data. Figures on this page are placeholders.</div>
+
+  <header class="masthead">
+    <div class="masthead__inner">
+      <a class="masthead__mark" href="#top"><span id="mast-name"></span><em>The Profile</em></a>
+      <nav class="masthead__nav" aria-label="Sections">
+        <a href="#story">Story</a>
+        <a href="#record">Record</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#partner" class="masthead__cta">Partner</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Opening spread -->
+    <article id="top">
+      <figure class="opener">
+        <div class="opener__img" id="hero-media"></div>
+        <figcaption class="opener__cap container" id="hero-cap"></figcaption>
+      </figure>
+
+      <header class="title container">
+        <p class="kicker" id="kicker"></p>
+        <h1 class="title__head">Built Between <em>Bedtimes</em></h1>
+        <p class="title__dek" id="dek"></p>
+        <p class="byline" id="byline"></p>
+      </header>
+
+      <!-- The story -->
+      <section id="story" class="story container" aria-labelledby="story-h">
+        <h2 id="story-h" class="sr-only">Her story</h2>
+        <div class="story__main" id="story-main"></div>
+
+        <aside class="sidebar" aria-label="By the numbers">
+          <div class="sidebar__box">
+            <h3 class="sidebar__title">By the numbers</h3>
+            <dl class="numbers" id="stats"></dl>
+          </div>
+          <div class="sidebar__box">
+            <h3 class="sidebar__title">Career notes</h3>
+            <ol class="notes" id="highlights"></ol>
+          </div>
+        </aside>
+      </section>
+    </article>
+
+    <!-- Results -->
+    <section id="record" class="record" aria-labelledby="record-h">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-head__num">Part Two</p>
+          <h2 id="record-h" class="sec-head__title">The Record</h2>
+          <p class="sec-head__dek" id="record-dek"></p>
+        </header>
+
+        <h3 class="sub-title">Personal bests</h3>
+        <div class="pbs" id="pbs"></div>
+
+        <div class="results-head">
+          <h3 class="sub-title">Complete results</h3>
+          <div class="filters" id="filters" role="group" aria-label="Filter results by series"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="results">
+            <caption class="sr-only">Race results, most recent first</caption>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Event</th>
+                <th scope="col">Division</th>
+                <th scope="col" class="num">Time</th>
+                <th scope="col" class="num">Place</th>
+              </tr>
+            </thead>
+            <tbody id="results"></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="results-note"></p>
+      </div>
+    </section>
+
+    <!-- Upcoming -->
+    <section id="calendar" class="calendar" aria-labelledby="cal-h">
+      <div class="container calendar__grid">
+        <header class="sec-head sec-head--side">
+          <p class="sec-head__num">Part Three</p>
+          <h2 id="cal-h" class="sec-head__title">What&rsquo;s Next</h2>
+          <p class="sec-head__dek">The season ahead, from the family calendar.</p>
+        </header>
+        <ol class="races" id="upcoming"></ol>
+      </div>
+    </section>
+
+    <!-- Audience & proof -->
+    <section id="audience" class="audience" aria-labelledby="aud-h">
+      <div class="container">
+        <header class="sec-head">
+          <p class="sec-head__num">Part Four</p>
+          <h2 id="aud-h" class="sec-head__title">Who&rsquo;s Watching</h2>
+        </header>
+        <div class="audience__grid">
+          <div class="audience__text">
+            <p class="lede-sm" id="aud-summary"></p>
+            <blockquote class="igbio">
+              <p id="ig-bio"></p>
+              <footer>Her Instagram bio</footer>
+            </blockquote>
+          </div>
+          <dl class="reach" id="reach"></dl>
+        </div>
+
+        <div class="proof">
+          <div class="proof__item" id="proof-partner"></div>
+          <div class="proof__item" id="proof-highlights"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partner -->
+    <section id="partner" class="partner" aria-labelledby="partner-h">
+      <div class="container">
+        <header class="sec-head sec-head--center">
+          <p class="sec-head__num">Coda</p>
+          <h2 id="partner-h" class="sec-head__title">Partner with <span id="partner-first"></span></h2>
+          <p class="sec-head__dek" id="partner-dek">Why a brand belongs in her corner, and how to get there.</p>
+        </header>
+
+        <ol class="values" id="values"></ol>
+
+        <h3 class="sub-title sub-title--center">Partnership tiers</h3>
+        <div class="tiers" id="tiers"></div>
+
+        <div class="contact">
+          <p class="contact__eyebrow">Correspondence</p>
+          <p class="contact__head">Let&rsquo;s talk about next season.</p>
+          <a class="contact__email" id="contact-email" href="#"></a>
+          <div class="contact__links" id="contact-links"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <div class="container colophon__inner">
+      <p class="colophon__name" id="foot-name"></p>
+      <p id="foot-meta"></p>
+    </div>
+  </footer>
+
+  <script src="../data/jamie-lee.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

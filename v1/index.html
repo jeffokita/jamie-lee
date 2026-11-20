@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Athlete Profile</title>
+  <meta name="description" content="Hybrid racing athlete profile and sponsorship opportunities." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="draft-banner" class="draft-banner" hidden>
+    Preview: showing <strong>sample data</strong>. Edit <code>data/jamie-lee.js</code> and set <code>draft: false</code> when ready.
+  </div>
+
+  <header class="nav">
+    <a href="#top" class="nav__brand" id="nav-name"></a>
+    <nav class="nav__links">
+      <a href="#about">About</a>
+      <a href="#results">Results</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#partner">Partner</a>
+    </nav>
+    <a href="#contact" class="btn btn--small">Sponsor</a>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__media" id="hero-media"></div>
+      <div class="hero__overlay"></div>
+      <div class="hero__content container">
+        <p class="eyebrow" id="hero-disciplines"></p>
+        <h1 class="hero__name" id="hero-name"></h1>
+        <p class="hero__tagline" id="hero-tagline"></p>
+        <div class="hero__ctas">
+          <a href="#contact" class="btn">Become a sponsor</a>
+          <a href="#results" class="btn btn--ghost">View results</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="container stats__grid" id="stats"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="about__portrait" id="portrait"></div>
+        <div class="about__text">
+          <p class="eyebrow">The athlete</p>
+          <h2 class="section__title">Meet <span id="about-first"></span></h2>
+          <div id="bio"></div>
+          <ul class="highlights" id="highlights"></ul>
+          <a class="site-link" id="website-link" href="#" target="_blank" rel="noopener"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERVIEW QUOTE -->
+    <section class="quote" id="interview" hidden>
+      <div class="container quote__inner">
+        <blockquote class="quote__text" id="quote-text"></blockquote>
+        <p class="quote__source" id="quote-source"></p>
+        <a class="btn btn--ghost" id="quote-link" href="#" target="_blank" rel="noopener">Read the full interview ↗</a>
+      </div>
+    </section>
+
+    <!-- THE SPORT -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="eyebrow">The sport</p>
+        <h2 class="section__title">Hybrid racing</h2>
+        <p class="section__lede">Running plus functional strength, raced against the clock. It's one of the fastest-growing formats in fitness, and it's where endurance and power meet.</p>
+        <div class="sport-grid">
+          <article class="sport-card">
+            <span class="tag tag--hyrox">HYROX</span>
+            <h3>8 km run + 8 stations</h3>
+            <p>Eight 1 km runs, each followed by a workout station: SkiErg, sled push, sled pull, burpee broad jumps, row, farmers carry, sandbag lunges, and wall balls.</p>
+          </article>
+          <article class="sport-card">
+            <span class="tag tag--deka">Spartan DEKA</span>
+            <h3>10 zones, one clock</h3>
+            <p>Ten functional fitness zones. DEKA FIT adds a 500 m run between each zone, DEKA MILE uses shorter runs, and DEKA STRONG is the zones only.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section" id="results">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <p class="eyebrow">Race record</p>
+            <h2 class="section__title">Results</h2>
+          </div>
+          <div class="filters" role="group" aria-label="Filter results">
+            <button class="filter is-active" data-filter="all">All</button>
+            <button class="filter" data-filter="HYROX">HYROX</button>
+            <button class="filter" data-filter="DEKA">DEKA</button>
+          </div>
+        </div>
+        <h3 class="pbs__title">Personal bests</h3>
+        <div class="pbs" id="pbs"></div>
+        <div class="table-wrap">
+          <table class="results">
+            <thead>
+              <tr><th>Date</th><th>Event</th><th>Division</th><th>Time</th><th>Place</th></tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="section section--alt" id="schedule">
+      <div class="container">
+        <p class="eyebrow">Next up</p>
+        <h2 class="section__title">Race schedule</h2>
+        <div class="schedule" id="schedule-list"></div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <p class="eyebrow">In action</p>
+            <h2 class="section__title">Gallery</h2>
+          </div>
+          <a class="btn btn--ghost js-highlights" href="#" target="_blank" rel="noopener">Watch race highlights ↗</a>
+        </div>
+        <div class="gallery" id="gallery"></div>
+      </div>
+    </section>
+
+    <!-- PARTNER -->
+    <section class="section section--alt" id="partner">
+      <div class="container">
+        <p class="eyebrow">Why partner</p>
+        <h2 class="section__title">Grow with <span id="partner-first"></span></h2>
+        <p class="section__lede" id="audience-summary"></p>
+        <a class="reel-cta" id="reel-link" href="#" target="_blank" rel="noopener">
+          <span class="reel-cta__play">▶</span>
+          <span><strong>See a sponsorship in action</strong><span class="muted">Watch Jamie's partner reel on Instagram ↗</span></span>
+        </a>
+        <div class="reach" id="reach"></div>
+        <div class="value-grid" id="value"></div>
+
+        <h3 class="subhead">Partnership opportunities</h3>
+        <div class="tiers" id="tiers"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <div class="container contact__inner">
+        <h2 class="contact__title">Let's race together.</h2>
+        <p>Interested in sponsoring <span id="contact-first"></span>? Get in touch for a media kit and partnership details.</p>
+        <div class="hero__ctas">
+          <a class="btn" id="contact-email" href="#">Email for partnerships</a>
+          <a class="btn btn--ghost js-highlights" href="#" target="_blank" rel="noopener">Race highlights on Instagram ↗</a>
+          <a class="btn btn--ghost" id="contact-ig" href="#" target="_blank" rel="noopener">Follow on Instagram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© <span id="year"></span> <span id="footer-name"></span>. All rights reserved.</div>
+  </footer>
+
+  <script src="../data/jamie-lee.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
