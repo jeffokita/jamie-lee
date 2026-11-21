@@ -58,11 +58,9 @@ window.ATHLETE = {
   // Light personal details for the off-course section
   funFacts: [
     "Walkout song: \"Cinderella Man\" by Eminem",
-    "Fell off a treadmill, ended up with staples, and qualified for three Worlds events two days later",
+    "Fell off a treadmill, ended up with staples in her head, and qualified for three Worlds events two days later",
+    "Loves racing in fun outfits, and even better, fun matching outfits with her teammates",
   ],
-
-  // Fun closing note for the bottom of the page
-  outfits: "She loves racing in fun outfits, and even better, fun matching outfits with her teammates.",
 
   // Mom card copy, in Jamie's words
   mom: "Mom to one daughter who loves training in the home gym and running laps around the kitchen island. Her favorite move? Pull-ups.",

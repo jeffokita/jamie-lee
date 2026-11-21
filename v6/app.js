@@ -67,8 +67,8 @@
   document.title = a.name + " | Hybrid Racing Athlete";
   if (a.draft) $("draft-banner").hidden = false;
   $("nav-name").textContent = a.name;
-  $("nav-cta").textContent = "Partner with " + first;
-  $("hero-cta").textContent = "Partner with " + first;
+  $("nav-cta").textContent = "Sponsor " + first;
+  $("hero-cta").textContent = "Sponsor " + first;
   $("partner-first").textContent = first + ".";
   $("foot-name").textContent = a.name;
   $("foot-meta").innerHTML = esc([a.category, disciplines.join(" · "), a.location].filter(Boolean).join("  /  ")) +
