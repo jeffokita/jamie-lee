@@ -9,12 +9,12 @@
   <meta name="theme-color" content="#0a0a0b" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script>
     /* Apply the color theme before first paint: ?theme= wins, then saved choice, else Volt */
     (function () {
-      var themes = ["volt", "flare", "electric", "chalk"], t = null;
+      var themes = ["volt", "flare", "electric", "chalk", "midnight", "studio", "lagoon", "print"], t = null;
       try { t = new URLSearchParams(location.search).get("theme"); } catch (e) {}
       if (themes.indexOf(t) > -1) { try { localStorage.setItem("jl-theme", t); } catch (e) {} }
       else { try { t = localStorage.getItem("jl-theme"); } catch (e) {} }
@@ -91,12 +91,18 @@
 
     <!-- 5. STORY -->
     <section class="section story" id="story" aria-labelledby="story-title">
+      <div class="wrap story__lead">
+        <header class="head">
+          <p class="eyebrow">Her story</p>
+          <h2 class="title" id="story-title">From mid&#8209;pack<br />to <span class="hl">Worlds.</span></h2>
+        </header>
+        <aside class="bloom" id="bloom" aria-label="The late bloomer" hidden>
+          <p class="bloom__k"><span class="bloom__badge">Late bloomer</span>Peaked in her mid-30s</p>
+          <p class="bloom__text" id="bloom-text"></p>
+        </aside>
+      </div>
       <div class="wrap story__grid">
         <div class="story__aside">
-          <header class="head">
-            <p class="eyebrow">Her story</p>
-            <h2 class="title" id="story-title">From mid&#8209;pack<br />to <span class="hl">Worlds.</span></h2>
-          </header>
           <figure class="story__photo" id="story-photo"></figure>
         </div>
         <ol class="timeline" id="timeline"></ol>
@@ -222,6 +228,15 @@
           <a class="btn btn--ghost" id="highlights-link" href="#" target="_blank" rel="noopener" hidden>Race-day highlights on Instagram <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
         </header>
         <div class="gallery" id="gallery"></div>
+      </div>
+    </section>
+
+    <!-- OUTFITS -->
+    <section class="fits" id="fits" aria-labelledby="fits-title" hidden>
+      <div class="wrap fits__inner">
+        <p class="fits__k">Race-day style</p>
+        <h2 class="fits__title" id="fits-title">Fun fits.<br /><span>Matching</span> teammates.</h2>
+        <p class="fits__text" id="fits-text"></p>
       </div>
     </section>
 

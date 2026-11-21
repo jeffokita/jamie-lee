@@ -180,6 +180,7 @@
   var storyImg = gallery[0] || (a.portrait ? { src: a.portrait, alt: portraitAlt } : null);
   if (storyImg) $("story-photo").innerHTML = img(storyImg.src, storyImg.alt, storyImg.position);
   else $("story-photo").remove();
+  if (a.lateBloomer) { $("bloom").hidden = false; $("bloom-text").textContent = a.lateBloomer; }
   var story = arr(a.story);
   $("timeline").innerHTML = story.map(function (c, i) {
     var isYear = /^\d{4}$/.test(String(c.year).trim());
@@ -207,7 +208,31 @@
   }
 
   /* ---------- 7. performance ---------- */
+  // Time as shown: approx times get "≈" and drop :00 seconds from h:mm:ss ("≈1:45"); mm:ss stays ("≈20:00")
+  function showTime(e) {
+    var t = String(e.time || "");
+    if (!e.approx) return t;
+    if (t.split(":").length === 3) t = t.replace(/:00(\.0)?$/, "");
+    return "≈" + t;
+  }
+  function when(e) { return e.dateLabel || (e.date ? fmt(e.date, "my") : ""); }
+  function where(e) {
+    var w = when(e), race = String(e.race || "");
+    // Skip a label the race name already says ("2023 DEKA season best" + "2023 season")
+    var yr = String(w).match(/^(\d{4}) season$/);
+    if (yr && race.indexOf(yr[1]) > -1) w = "";
+    return [race, w].filter(Boolean).join(" · ");
+  }
+  function cutText(a1, b1) {
+    var cut = toSec(a1.time) - toSec(b1.time);
+    if (cut <= 0) return "";
+    if (a1.approx || b1.approx) return "−" + Math.max(1, Math.round(cut / 60)) + " min";
+    return "−" + (cut < 60 ? (Math.round(cut * 10) / 10) + "s" : fmtDur(cut));
+  }
+  var APPROX = '<span class="approx">approx.</span>';
+
   function chart(entries, id) {
+    entries = entries.filter(function (e) { return e.date; });
     var pts = entries.map(function (e) { return { d: dayNum(e.date), s: toSec(e.time), e: e }; });
     var W = 640, H = 250, L = 52, R = 18, T = 26, B = 36;
     var d0 = pts[0].d, d1 = pts[pts.length - 1].d;
@@ -233,9 +258,8 @@
         '<text class="c-ax" x="' + x(dd) + '" y="' + (H - B + 22) + '" text-anchor="middle">' + yr + "</text>";
     }
     var path = "M" + x(pts[0].d) + "," + y(pts[0].s);
-    var area = path;
     for (var i = 1; i < pts.length; i++) path += " H" + x(pts[i].d) + " V" + y(pts[i].s);
-    area = path + " V" + (H - B) + " H" + x(pts[0].d) + " Z";
+    var area = path + " V" + (H - B) + " H" + x(pts[0].d) + " Z";
     var dots = pts.map(function (p, i) {
       var last = i === pts.length - 1, firstPt = i === 0;
       var lbl = "";
@@ -243,63 +267,66 @@
         var anchor = firstPt ? "start" : "end";
         var ly = firstPt ? y(p.s) - 12 : y(p.s) + 8;
         var lx = firstPt ? x(p.d) : x(p.d) - 14;
-        lbl = '<text class="c-lbl' + (last ? " c-lbl--pb" : "") + '" x="' + lx + '" y="' + ly + '" text-anchor="' + anchor + '">' + esc(p.e.time) + "</text>";
+        lbl = '<text class="c-lbl' + (last ? " c-lbl--pb" : "") + '" x="' + lx + '" y="' + ly + '" text-anchor="' + anchor + '">' + esc(showTime(p.e)) + "</text>";
       }
       return '<circle class="c-dot' + (last ? " c-dot--pb" : "") + '" cx="' + x(p.d) + '" cy="' + y(p.s) + '" r="' + (last ? 7 : 4.5) + '"/>' + lbl;
     }).join("");
     return '<svg class="chart" viewBox="0 0 ' + W + " " + H + '" role="img" aria-labelledby="' + id + '-t"><title id="' + id + '-t">' +
-      esc("Personal best progression: " + entries.map(function (e) { return e.time + " (" + fmt(e.date, "my") + ")"; }).join(", ")) +
+      esc("Personal best progression: " + entries.map(function (e) { return showTime(e) + " (" + when(e) + ")"; }).join(", ")) +
       "</title>" + g + '<path class="c-area" d="' + area + '"/><path class="c-line" d="' + path + '"/>' + dots + "</svg>";
   }
 
+  // Entries are listed oldest first in the data (null-date entries keep their place)
   var progs = arr(a.pbProgressions).filter(function (p) { return p && arr(p.entries).length; }).map(function (p) {
-    var es = arr(p.entries).slice().sort(function (x, y) { return x.date < y.date ? -1 : 1; });
+    var es = arr(p.entries).slice();
     var best = es.reduce(function (b, e) { return toSec(e.time) < toSec(b.time) ? e : b; }, es[0]);
-    return { p: p, es: es, f: es[0], best: best };
+    var dated = es.filter(function (e) { return e.date; });
+    return { p: p, es: es, f: es[0], best: best, chartable: dated.length === es.length && es.length > 1 };
   });
-  // PB board tile: current personal best; multi-entry tracks also get a compact first -> PB line
+  var seriesTag = function (s) { return '<span class="tag tag--' + esc(String(s || "").toLowerCase()) + '">' + esc(s) + "</span>"; };
+  // PB board tile: fastest entry; multi-entry tracks also get a compact first -> PB line
   function tile(t) {
-    var b = t.best, f = t.f, cut = toSec(f.time) - toSec(b.time);
-    return '<li class="pbt reveal"><p class="pbt__head"><span class="tag">' + esc(t.p.event) + "</span>" +
+    var b = t.best, f = t.f, cut = cutText(f, b);
+    return '<li class="pbt reveal"><p class="pbt__head">' + seriesTag(t.p.event) +
       (b.percentile ? '<span class="pct">' + esc(b.percentile) + "</span>" : "") + "</p>" +
       '<h4 class="pbt__format">' + esc(t.p.format || "") + "</h4>" +
-      '<p class="pbt__time"><span class="sr-only">Personal best: </span>' + esc(b.time) + "</p>" +
-      '<p class="pbt__where">' + esc(b.race) + " · " + esc(fmt(b.date, "my")) + "</p>" +
-      (t.es.length > 1 && cut > 0 ? '<p class="pbt__from"><span class="pbt__fromk">First</span> ' + esc(f.time) + ' <span aria-hidden="true">→</span><span class="sr-only"> to </span> PB <strong>−' +
-        esc(cut < 60 ? (Math.round(cut * 10) / 10) + "s" : fmtDur(cut)) + "</strong></p>" : "") +
+      '<p class="pbt__time"><span class="sr-only">Personal best' + (b.approx ? ", approximately" : "") + ": </span>" + esc(showTime(b)) + "</p>" +
+      '<p class="pbt__where">' + esc(where(b)) + (b.approx ? " " + APPROX : "") + "</p>" +
+      (t.es.length > 1 && cut ? '<p class="pbt__from"><span class="pbt__fromk">First</span> ' + esc(showTime(f)) + ' <span aria-hidden="true">→</span><span class="sr-only"> to </span> PB <strong>' + esc(cut) + "</strong></p>" : "") +
       (b.note ? '<p class="pb__badge">' + esc(b.note) + "</p>" : "") + "</li>";
   }
   var solo = progs.filter(function (t) { return !t.p.team; });
   var team = progs.filter(function (t) { return t.p.team; });
-  var multi = solo.filter(function (t) { return t.es.length > 1; });
+  // Big first -> PB blocks: solo, featured, multi-entry, fully dated (charts need dates)
+  var multi = solo.filter(function (t) { return t.p.featured !== false && t.chartable; });
   var prog = multi.map(function (t, idx) {
     var p = t.p, es = t.es, f = t.f, best = t.best;
-    var cut = toSec(f.time) - toSec(best.time);
-    var months = Math.round((dayNum(best.date) - dayNum(f.date)) / 30.44);
+    var cut = cutText(f, best);
+    var months = f.date && best.date ? Math.round((dayNum(best.date) - dayNum(f.date)) / 30.44) : 0;
     var prs = es.length - 1;
     var steps = es.map(function (e, i) {
       var delta = i ? toSec(es[i - 1].time) - toSec(e.time) : 0;
-      return "<li" + (e === best ? ' class="is-pb"' : "") + '><span class="st__date">' + esc(fmt(e.date, "my")) + '</span><span class="st__race">' + esc(e.race) +
+      return "<li" + (e === best ? ' class="is-pb"' : "") + '><span class="st__date">' + esc(when(e)) + '</span><span class="st__race">' + esc(e.race) +
         (e.note ? '<span class="st__note">' + esc(e.note) + "</span>" : "") + "</span>" +
         '<span class="st__pct">' + (e.percentile ? '<span class="pct pct--sm">' + esc(e.percentile) + "</span>" : "") + "</span>" +
-        '<span class="st__time">' + esc(e.time) + "</span>" +
-        '<span class="st__delta">' + (i === 0 ? "First" : delta > 0 ? "−" + fmtDur(delta) : "") + "</span></li>";
+        '<span class="st__time">' + esc(showTime(e)) + "</span>" +
+        '<span class="st__delta">' + (i === 0 ? "First" : delta > 0 ? esc(cutText(es[i - 1], e)) : "") + "</span></li>";
     }).join("");
-    return '<article class="pb reveal"><header class="pb__head"><span class="tag">' + esc(p.event) + '</span><h3 class="pb__format">' + esc(p.format || "") + "</h3></header>" +
+    return '<article class="pb reveal"><header class="pb__head">' + seriesTag(p.event) + '<h3 class="pb__format">' + esc(p.format || "") + "</h3></header>" +
       '<div class="pb__top">' +
         '<div class="pb__fp">' +
-          '<div class="fp fp--first"><p class="pb__k">First race</p><p class="fp__time">' + esc(f.time) + '</p><p class="pb__where">' + esc(f.race) + " · " + esc(fmt(f.date, "my")) + "</p></div>" +
+          '<div class="fp fp--first"><p class="pb__k">First race</p><p class="fp__time">' + esc(showTime(f)) + '</p><p class="pb__where">' + esc(where(f)) + "</p></div>" +
           '<span class="fp__arrow" aria-hidden="true">→</span>' +
-          '<div class="fp fp--pb"><p class="pb__k">Personal best</p><p class="fp__time">' + esc(best.time) + '</p><p class="pb__where">' + esc(best.race) + " · " + esc(fmt(best.date, "my")) + "</p></div>" +
+          '<div class="fp fp--pb"><p class="pb__k">Personal best</p><p class="fp__time">' + esc(showTime(best)) + '</p><p class="pb__where">' + esc(where(best)) + "</p></div>" +
         "</div>" +
         '<dl class="pb__nums">' +
           (f.percentile && best.percentile && f !== best ? '<div class="pb__rank"><dt>Field ranking</dt><dd>' + esc(f.percentile) + ' <span aria-hidden="true">→</span><span class="sr-only"> to </span> <mark>' + esc(best.percentile.replace(/^Top\s*/i, "")) + "</mark></dd></div>" : "") +
-          (cut > 0 ? '<div><dt>Time cut</dt><dd>−' + esc(cut < 60 ? (Math.round(cut * 10) / 10) + "s" : fmtDur(cut)) + "</dd></div>" : "") +
+          (cut ? '<div><dt>Time cut</dt><dd>' + esc(cut) + "</dd></div>" : "") +
           '<div><dt>' + (prs === 1 ? "New PR" : "New PRs") + '</dt><dd>' + prs + "</dd></div>" +
           (months > 0 ? '<div><dt>Built over</dt><dd>' + months + " <small>months</small></dd></div>" : "") +
         "</dl>" +
       "</div>" +
-      '<div class="pb__viz">' + (es.length > 1 ? '<div class="chart-wrap">' + chart(es, "c" + idx) + "</div>" : "") + '<ol class="steps">' + steps + "</ol></div>" +
+      '<div class="pb__viz"><div class="chart-wrap">' + chart(es, "c" + idx) + '</div><ol class="steps">' + steps + "</ol></div>" +
     "</article>";
   }).join("");
   var html = "";
@@ -465,6 +492,9 @@
   if (a.highlightsUrl) { $("highlights-link").href = a.highlightsUrl; $("highlights-link").hidden = false; }
   if (!gallery.length && !a.highlightsUrl) $("gallery-sec").hidden = true;
 
+  /* ---------- outfits ---------- */
+  if (a.outfits) { $("fits").hidden = false; $("fits-text").textContent = a.outfits; }
+
   /* ---------- 14. contact ---------- */
   var c = a.contact || {};
   $("contact-lede").textContent = "Tell " + first + " about your brand and what you want a partnership to deliver.";
@@ -506,6 +536,10 @@
     { id: "flare", name: "Flare", note: "Hot coral on black", bg: "#0b0a0a", ac: "#ff5a36", meta: "#0b0a0a" },
     { id: "electric", name: "Electric", note: "Cyan on navy", bg: "#070f1f", ac: "#2de2ff", meta: "#070f1f" },
     { id: "chalk", name: "Chalk", note: "Light, orange accents", bg: "#f3f1eb", ac: "#ff5b1f", meta: "#f3f1eb" },
+    { id: "midnight", name: "Midnight", note: "Navy, teal & hot pink", bg: "#111f34", ac: "#ff4fa0", ac2: "#2fc1bd", meta: "#111f34" },
+    { id: "studio", name: "Studio", note: "Cream, teal & coral", bg: "#f6f3ec", ac: "#ff5a4a", ac2: "#1b6e6e", meta: "#f6f3ec" },
+    { id: "lagoon", name: "Lagoon", note: "Deep teal & volt", bg: "#0c2a2b", ac: "#d7ff3a", ac2: "#3fd0c9", meta: "#0c2a2b" },
+    { id: "print", name: "Print", note: "Race-kit brights & pattern", bg: "#111f34", ac: "#ffd23f", ac2: "#ff5fa8", meta: "#111f34", print: true },
   ];
   var root = document.documentElement, panel = $("themer-panel"), tbtn = $("themer-btn");
   var metaTheme = document.querySelector('meta[name="theme-color"]');
@@ -518,7 +552,7 @@
   }
   panel.innerHTML = '<p class="themer__title">Color theme</p>' + THEMES.map(function (t) {
     return '<button type="button" class="themer__opt" data-theme-id="' + t.id + '" aria-pressed="false">' +
-      '<span class="themer__sw" aria-hidden="true" style="background:' + t.bg + '"><i style="background:' + t.ac + '"></i></span>' +
+      '<span class="themer__sw' + (t.print ? " themer__sw--print" : "") + '" aria-hidden="true" style="background:' + t.bg + '"><i style="background:' + t.ac + '"></i>' + (t.ac2 ? '<b style="background:' + t.ac2 + '"></b>' : "") + "</span>" +
       '<span class="themer__txt"><strong>' + esc(t.name) + "</strong><small>" + esc(t.note) + "</small></span></button>";
   }).join("");
   function setOpen(open) {

@@ -15,7 +15,9 @@ window.ATHLETE = {
 
   name: "Jamie Lee",
   firstName: "Jamie",
-  tagline: "Mom, founder, and hybrid racer. Every podium built on consistency, grit, and self-belief.",
+  tagline: "Mom, founder, and late-blooming athlete who didn't hit her peak until her mid-30s. Every podium built on consistency, grit, and self-belief.",
+  // The late-bloomer story, for brands to share with athletes in their space
+  lateBloomer: "No Division I résumé and no childhood-sports pedigree, though she stayed competitive in niche sports growing up. Jamie's peak athleticism didn't arrive until her mid-30s, proof that you can become a competitive athlete later in life.",
   location: "Pacific Northwest",
   disciplines: ["HYROX", "DEKA", "ATHX"],
   category: "Hybrid fitness athlete",
@@ -27,10 +29,10 @@ window.ATHLETE = {
 
   // Headline numbers shown in the stat strip under the hero
   stats: [
-    { value: "20+", label: "Podiums and counting, in 3 years of racing" },
+    { value: "20+", label: "Podiums in 3 years across HYROX, DEKA, ATHX, road races & triathlons" },
     { value: "1st", label: "Age group, ATHX Houston 2026 mixed pairs" },
     { value: "6", label: "DEKA Worlds qualifications, 2026" },
-    { value: "3×", label: "DEKA World Championships" },
+    { value: "3×", label: "DEKA World Championships competitor" },
     { value: "2nd", label: "DEKA MILE Worlds, 2024" },
   ],
   // Counts Jamie still needs to confirm; pages hide these while null
@@ -45,12 +47,12 @@ window.ATHLETE = {
 
   // Career timeline, shown as story chapters
   story: [
-    { year: "Before 2023", title: "The everyday athlete", text: "Jamie spent years in road racing, triathlons (up to one half Ironman), and group fitness, dabbling in CrossFit, Orangetheory, and Barry's Bootcamp, or a scenic run wherever she traveled. By her own account she was a middle-of-the-road athlete, finishing mid-pack if not near the back: an everyday athlete who loved fitness and community." },
+    { year: "Before 2023", title: "The everyday athlete", text: "Jamie spent years in road racing, triathlons (up to one half Ironman), and group fitness, dabbling in CrossFit, Orangetheory, and Barry's Bootcamp, or a scenic run wherever she traveled. By her own account she was a middle-of-the-road athlete, finishing mid-pack if not near the back: an everyday athlete who loved fitness and community. With no Division I background or childhood-sports pedigree (just niche sports she stayed competitive in growing up), she was a late bloomer whose best years were still ahead." },
     { year: "2023", title: "The call-up", text: "She got serious about Spartan obstacle course racing. Four podiums in a single quarter earned her selection to Team USA OCR for multiple events. She started racing DEKA, earning two World Championship bids she couldn't compete in at eight months pregnant, and raced HYROX that season, cutting three to four minutes from her first race to her second and getting excited about her potential in the sport." },
     { year: "2024", title: "All in", text: "Nine weeks postpartum, she raced her first DEKA event, finishing just a couple of minutes off her PR. That year she snagged close to 10 podiums across hybrid racing and road races from the 5K to the half marathon, and at the DEKA World Championships she finished 2nd in her division in the DEKA MILE and 5th in the DEKA FIT." },
-    { year: "2025", title: "Fifteen places", text: "She earned her first HYROX podium in Las Vegas and set her solo HYROX PB of 1:12:36 in New York. Then, over Labor Day, she broke her hand: a compound fracture in 15 places, with pins, surgery, and weeks off training. In her first race back in November she won her division at a local 5K, and that gave her the confidence to step back onto a true start line at the 2025 DEKA World Championships, where she placed 6th in her division in the DEKA FIT." },
-    { year: "2026", title: "Diversify", text: "She moved up to HYROX Pro in solos and doubles, added more team racing, and took on ATHX, a strength-forward format, even though she's never considered herself a strength athlete. She won her age group at ATHX Houston in mixed pairs (3rd overall, winning the MetCon X segment), qualified for six events at the DEKA World Championships (competing in four), and is competing at the ATHX World Finals in Lisbon in the overall teams category." },
-    { year: "2027", title: "The ultimate hybrid athlete", text: "Next, Jamie is exploring new formats and continuing to build strength, power, and speed in both solos and doubles." },
+    { year: "2025", title: "Fifteen breaks", text: "She earned her first HYROX podium in Las Vegas and set her solo HYROX PB of 1:12:36 in New York. Then, over Labor Day, came a traumatic injury: a compound fracture that shattered her hand in 15 breaks, followed by pins, surgery, and weeks away from training. In her first race back in November she won her division at a local 5K, and that gave her the confidence to step back onto a true start line at the 2025 DEKA World Championships, where she placed 6th in her division in the DEKA FIT." },
+    { year: "2026", title: "Diversify", text: "She moved up to HYROX Pro in solos and doubles, collected another HYROX podium, raced more doubles and relays, and took on ATHX, a strength-forward format, even though she's never considered herself a strength athlete. She won her age group at ATHX Houston in mixed pairs (3rd overall, winning the MetCon X segment), qualified for six events at the DEKA World Championships (competing in four), and is competing at the ATHX World Finals in Lisbon in the overall teams category." },
+    { year: "2027", title: "The sky's the limit", text: "The sky's the limit. Jamie is still exploring what comes next, trying new formats while building strength, power, and speed in both solos and doubles." },
   ],
 
   // Light personal details for the off-course section
@@ -58,6 +60,9 @@ window.ATHLETE = {
     "Walkout song: \"Cinderella Man\" by Eminem",
     "Fell off a treadmill, ended up with staples, and qualified for three Worlds events two days later",
   ],
+
+  // Fun closing note for the bottom of the page
+  outfits: "She loves racing in fun outfits, and even better, fun matching outfits with her teammates.",
 
   // Mom card copy, in Jamie's words
   mom: "Mom to one daughter who loves training in the home gym and running laps around the kitchen island. Her favorite move? Pull-ups.",
@@ -72,7 +77,7 @@ window.ATHLETE = {
     "Top 10 at the 2025 DEKA World Championships: 6th in division, DEKA FIT",
     "4th in age group at HYROX New York 2025, top 4% of 1,231 women",
     "2024 DEKA World Championships: 2nd in division (MILE), 5th (FIT)",
-    "Back racing within 3 months of a compound fracture in 15 places, 2025",
+    "Back racing within 3 months of a compound fracture with 15 breaks, 2025",
   ],
 
   // Press / feature interview, shown as a pull quote with a link
@@ -132,16 +137,31 @@ window.ATHLETE = {
     { event: "HYROX", format: "Pro Women (solo)", entries: [
       { date: "2026-02-20", race: "HYROX Las Vegas", time: "1:24:03" },
     ] },
-    { event: "DEKA", format: "DEKA MILE (solo)", entries: [
+    // featured: false keeps a track in the PB board without a big first -> PB block.
+    // dateLabel replaces the formatted date (e.g. season bests); approx marks a time Jamie
+    // gave from memory that still needs an exact result.
+    { event: "DEKA", format: "DEKA MILE (solo)", featured: false, entries: [
+      { date: "2023-07-01", dateLabel: "2023 season", race: "2023 DEKA season best", time: "24:12" },
       { date: "2024-12-14", race: "DEKA World Championships", time: "23:54.7", note: "2nd in age group (F35-39)" },
       { date: "2025-07-12", race: "DEKA MILE, G3 Fitness", time: "23:45", note: "1st female, 2nd overall" },
     ] },
     { event: "DEKA", format: "DEKA FIT (solo)", entries: [
+      { date: "2023-07-01", dateLabel: "2023 season", race: "2023 DEKA season best", time: "42:25" },
+      { date: "2024-08-24", race: "DEKA FIT Oaks, PA", time: "40:37.9", note: "6th of 32 in age group (F35-39)" },
       { date: "2024-12-13", race: "DEKA World Championships", time: "39:40.3", note: "5th in age group (F35-39)" },
     ] },
+    { event: "DEKA", format: "DEKA STRONG (solo)", featured: false, entries: [
+      { date: "2023-07-01", dateLabel: "2023 season", race: "2023 DEKA season best", time: "16:52" },
+      { date: "2025-07-01", dateLabel: "2025 season", race: "2025 DEKA season best", time: "15:54" },
+    ] },
     // Road races (add half marathon and faster 5Ks as Jamie sends them)
-    { event: "Road", format: "5K", entries: [
-      { date: "2023-09-17", race: "MLK Dream Run, Portland", time: "22:56", percentile: "Top 4%", note: "6th of 160 women" },
+    { event: "Road", format: "5K", featured: false, entries: [
+      { date: "2023-09-17", race: "MLK Dream Run, Portland", time: "22:56", note: "6th of 160 women" },
+      { date: null, dateLabel: "Personal record", race: "5K PR", time: "20:00", approx: true },
+    ] },
+    { event: "Road", format: "Half marathon", entries: [
+      { date: null, dateLabel: "In her 20s", race: "First half marathon", time: "2:11:00", approx: true },
+      { date: "2024-09-14", race: "Beaverton Half Marathon", time: "1:45:00", approx: true },
     ] },
     // Doubles and teams (team: true). Partners vary, so these are shown separately.
     { event: "HYROX", format: "Doubles Women", team: true, entries: [
