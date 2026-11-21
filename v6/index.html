@@ -11,6 +11,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    /* Apply the color theme before first paint: ?theme= wins, then saved choice, else Volt */
+    (function () {
+      var themes = ["volt", "flare", "electric", "chalk"], t = null;
+      try { t = new URLSearchParams(location.search).get("theme"); } catch (e) {}
+      if (themes.indexOf(t) > -1) { try { localStorage.setItem("jl-theme", t); } catch (e) {} }
+      else { try { t = localStorage.getItem("jl-theme"); } catch (e) {} }
+      if (themes.indexOf(t) < 0) t = "volt";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -35,10 +46,7 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero__grid wrap">
         <div class="hero__copy">
-          <div class="bib" aria-hidden="false">
-            <span class="bib__name" id="hero-name"></span>
-            <span class="bib__meta" id="hero-category"></span>
-          </div>
+          <p class="bib"><span class="bib__meta" id="hero-category"></span></p>
           <h1 class="hero__title" id="hero-title"></h1>
           <p class="hero__disc" id="hero-disc"></p>
           <p class="hero__lede" id="hero-lede"></p>
@@ -166,7 +174,7 @@
             <p class="eyebrow">Hear Jamie</p>
             <h2 class="title" id="hear-title">In her <span class="hl">own words.</span></h2>
           </div>
-          <p class="intro">Conversations on leadership, digital growth and going solo, so you can hear how she connects with people before you ever get on a call.</p>
+          <p class="intro" id="hear-intro"></p>
         </header>
         <ul class="pods" id="pods"></ul>
       </div>
@@ -237,6 +245,13 @@
       <p class="footer__meta" id="foot-meta"></p>
     </div>
   </footer>
+
+  <div class="themer" id="themer">
+    <div class="themer__panel" id="themer-panel" role="group" aria-label="Color theme" hidden></div>
+    <button type="button" class="themer__btn" id="themer-btn" aria-expanded="false" aria-controls="themer-panel">
+      <span class="themer__dot" aria-hidden="true"></span>Color
+    </button>
+  </div>
 
   <script src="../data/jamie-lee.js"></script>
   <script src="app.js"></script>

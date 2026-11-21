@@ -18,7 +18,7 @@ window.ATHLETE = {
   tagline: "Mom, founder, and hybrid racer. Every podium built on consistency, grit, and self-belief.",
   location: "Pacific Northwest",
   disciplines: ["HYROX", "DEKA", "ATHX"],
-  category: "Hybrid fitness racing",
+  category: "Hybrid fitness athlete",
   // One-line pitch that blends racing with her consumer-brand career
   positioning: "A hybrid racer with nearly 20 years of consumer empathy, building brands like Nike, Vital Proteins, and Everlane.",
   trainsWith: "Underdog Fitness",
@@ -27,10 +27,11 @@ window.ATHLETE = {
 
   // Headline numbers shown in the stat strip under the hero
   stats: [
-    { value: "3×", label: "DEKA World Championships" },
+    { value: "20+", label: "Podiums and counting, in 3 years of racing" },
+    { value: "1st", label: "Age group, ATHX Houston 2026 mixed pairs" },
     { value: "6", label: "DEKA Worlds qualifications, 2026" },
+    { value: "3×", label: "DEKA World Championships" },
     { value: "2nd", label: "DEKA MILE Worlds, 2024" },
-    { value: "ATHX", label: "World Finals, Lisbon 2026" },
   ],
   // Counts Jamie still needs to confirm; pages hide these while null
   podiums: null,
@@ -38,35 +39,40 @@ window.ATHLETE = {
 
   bio: [
     "Jamie Lee is a hybrid fitness racer competing in HYROX, DEKA, and ATHX. Off the course she's a mom and the founder of JME Labs, a fractional eCommerce GM and growth advisor for consumer brands, with nearly 20 years at companies like Nike, Vital Proteins, and Everlane.",
-    "She came up through road racing, OCR, and triathlons (including one half Ironman) as a self-described middle-of-the-pack athlete. In 2023 she was selected for Team USA OCR; postpartum she went all in on hybrid racing, finishing 2nd in her division in the DEKA MILE at the 2024 DEKA World Championships. In 2025 she broke her hand in 15 places and was racing again within three months. In 2026 she qualified for six events at DEKA Worlds and is competing at the ATHX World Finals in Lisbon.",
+    "She came up through road racing, OCR, and triathlons (including one half Ironman) as a self-described middle-of-the-pack athlete. In 2023 she was selected for Team USA OCR; postpartum she went all in on hybrid racing, finishing 2nd in her division in the DEKA MILE at the 2024 DEKA World Championships. In 2025 she came back from a compound fracture in 15 places to place 6th at DEKA Worlds. In 2026 she won her age group at ATHX Houston in mixed pairs, qualified for six events at DEKA Worlds, and is competing at the ATHX World Finals in Lisbon.",
     "She trains with Underdog Fitness, mostly in her home gym, and most of her podium finishes have come since becoming a mom. Her focus for 2027: building strength, power, and speed on the way to becoming the ultimate hybrid athlete.",
   ],
 
   // Career timeline, shown as story chapters
   story: [
-    { year: "Before 2023", title: "The everyday athlete", text: "Jamie spent years in road racing, group fitness classes, and triathlons, up to one half Ironman. By her own account she was a middle-of-the-road athlete, finishing mid-pack if not near the back: an everyday athlete who loved fitness and community." },
-    { year: "2023", title: "The call-up", text: "She got serious about Spartan obstacle course racing. Four podiums in a single quarter earned her selection to Team USA OCR for multiple events. She also started racing DEKA, earning two World Championship bids she couldn't use while pregnant, and tried HYROX for the first time." },
-    { year: "2024", title: "All in", text: "Postpartum, she went all in on hybrid racing. At the 2024 DEKA World Championships she finished 2nd in her division in the DEKA MILE and 5th in the DEKA FIT." },
-    { year: "2025", title: "Fifteen places", text: "She earned her first HYROX podium at HYROX Las Vegas in February, set her solo HYROX PB of 1:12:36 in New York in May, and then, over Labor Day, she broke her hand in 15 places: pins, surgery, and weeks off training. She was racing again by late November." },
-    { year: "2026", title: "Diversify", text: "She moved up to HYROX Pro, added doubles and team races to her individual racing, and took on ATHX, a strength-forward format, even though she's never considered herself a strength athlete. At ATHX Houston she and David Parham finished 3rd in Mixed pairs, winning the MetCon X segment. She qualified for six events at the DEKA World Championships, competing in four, and is competing at the ATHX World Finals in Lisbon in the overall teams category." },
-    { year: "2027", title: "The ultimate hybrid athlete", text: "Next, Jamie is building strength, power, and speed, and proving it across event types like ATHX." },
+    { year: "Before 2023", title: "The everyday athlete", text: "Jamie spent years in road racing, triathlons (up to one half Ironman), and group fitness, dabbling in CrossFit, Orangetheory, and Barry's Bootcamp, or a scenic run wherever she traveled. By her own account she was a middle-of-the-road athlete, finishing mid-pack if not near the back: an everyday athlete who loved fitness and community." },
+    { year: "2023", title: "The call-up", text: "She got serious about Spartan obstacle course racing. Four podiums in a single quarter earned her selection to Team USA OCR for multiple events. She started racing DEKA, earning two World Championship bids she couldn't compete in at eight months pregnant, and raced HYROX that season, cutting three to four minutes from her first race to her second and getting excited about her potential in the sport." },
+    { year: "2024", title: "All in", text: "Nine weeks postpartum, she raced her first DEKA event, finishing just a couple of minutes off her PR. That year she snagged close to 10 podiums across hybrid racing and road races from the 5K to the half marathon, and at the DEKA World Championships she finished 2nd in her division in the DEKA MILE and 5th in the DEKA FIT." },
+    { year: "2025", title: "Fifteen places", text: "She earned her first HYROX podium in Las Vegas and set her solo HYROX PB of 1:12:36 in New York. Then, over Labor Day, she broke her hand: a compound fracture in 15 places, with pins, surgery, and weeks off training. In her first race back in November she won her division at a local 5K, and that gave her the confidence to step back onto a true start line at the 2025 DEKA World Championships, where she placed 6th in her division in the DEKA FIT." },
+    { year: "2026", title: "Diversify", text: "She moved up to HYROX Pro in solos and doubles, added more team racing, and took on ATHX, a strength-forward format, even though she's never considered herself a strength athlete. She won her age group at ATHX Houston in mixed pairs (3rd overall, winning the MetCon X segment), qualified for six events at the DEKA World Championships (competing in four), and is competing at the ATHX World Finals in Lisbon in the overall teams category." },
+    { year: "2027", title: "The ultimate hybrid athlete", text: "Next, Jamie is exploring new formats and continuing to build strength, power, and speed in both solos and doubles." },
   ],
 
   // Light personal details for the off-course section
   funFacts: [
     "Walkout song: \"Cinderella Man\" by Eminem",
-    "Once fell off a treadmill and left with staples",
+    "Fell off a treadmill, ended up with staples, and qualified for three Worlds events two days later",
   ],
 
+  // Mom card copy, in Jamie's words
+  mom: "Mom to one daughter who loves training in the home gym and running laps around the kitchen island. Her favorite move? Pull-ups.",
+
+  // 2026 highlights first; the ticker leans on these
   highlights: [
+    "1st in age group and 3rd overall, Mixed pairs at ATHX Houston 2026",
     "Qualified for 6 events at the 2026 DEKA World Championships, competing in 4",
     "Competing at the 2026 ATHX World Finals in Lisbon, teams overall category",
-    "First HYROX podium: 2nd in age group, Doubles Women, HYROX Las Vegas 2025",
-    "3rd place, Mixed pairs at ATHX Houston 2026, winning the MetCon X segment",
+    "Two 2nd-place HYROX podiums within a year",
+    "2026 DEKA: age-group wins at DEKA FIT Sacramento and the G3 DEKA MILE, plus Elite pairs podiums in Sacramento and Chicago",
+    "Top 10 at the 2025 DEKA World Championships: 6th in division, DEKA FIT",
     "4th in age group at HYROX New York 2025, top 4% of 1,231 women",
     "2024 DEKA World Championships: 2nd in division (MILE), 5th (FIT)",
-    "Back racing within 3 months of breaking her hand in 15 places, 2025",
-    "Racing the HYROX Pro Women division since 2026",
+    "Back racing within 3 months of a compound fracture in 15 places, 2025",
   ],
 
   // Press / feature interview, shown as a pull quote with a link
@@ -80,18 +86,30 @@ window.ATHLETE = {
 
   // series: "HYROX" or "DEKA" (drives the filter buttons)
   // place: finishing position in the division at that race; field: division size;
-  // ageGroupPlace: place within her age group (hyresult.com)
+  // ageGroupPlace: place within her age group (hyresult.com). Partner names are
+  // intentionally left out at Jamie's request.
   // pb: true marks a personal best for that division
   results: [
-    { date: "2026-10-10", event: "HYROX Boston",    series: "HYROX", format: "Doubles Mixed",     time: "1:08:06", place: 147,  pb: true, partners: "Jim Delorie" },
-    { date: "2026-05-28", event: "HYROX New York",  series: "HYROX", format: "Doubles Mixed",     time: "1:24:30", place: 1949,           partners: "Steven Uvena" },
+    { date: "2026-07-25", event: "DEKA MILE, G3 Fitness", series: "DEKA", format: "DEKA MILE · F35-39", time: "23:57", place: 1, field: 22, note: "3rd female, 4th overall" },
+    { date: "2026-07-25", event: "DEKA MILE, G3 Fitness", series: "DEKA", format: "DEKA MILE · Female teams", time: "19:01", place: 1, pb: true },
+    { date: "2026-07-11", event: "DEKA FIT Chicago", series: "DEKA", format: "DEKA FIT · Elite Female", time: "41:01.2", place: 9, field: 14 },
+    { date: "2026-07-10", event: "DEKA FIT Chicago", series: "DEKA", format: "DEKA FIT · Co-Ed Elite pairs", time: "33:22", place: 2, field: 3, pb: true },
+    { date: "2026-04-26", event: "DEKA FIT Sacramento", series: "DEKA", format: "DEKA FIT · F35-39", time: "41:56.2", place: 1, field: 13 },
+    { date: "2026-04-25", event: "DEKA FIT Sacramento", series: "DEKA", format: "DEKA FIT · Female Elite pairs", time: "34:43", place: 3, field: 3 },
+    { date: "2025-12-06", event: "DEKA World Championships", series: "DEKA", format: "DEKA FIT · F35-39", time: "41:30.3", place: 6, field: 9 },
+    { date: "2025-07-12", event: "DEKA MILE, G3 Fitness", series: "DEKA", format: "DEKA MILE · F35-39", time: "23:45", place: 1, field: 22, pb: true, note: "1st female, 2nd overall" },
+    { date: "2025-07-12", event: "DEKA MILE, G3 Fitness", series: "DEKA", format: "DEKA MILE · Co-ed teams", time: "19:30", place: 2 },
+    { date: "2024-12-14", event: "DEKA World Championships", series: "DEKA", format: "DEKA MILE · F35-39", time: "23:54.7", place: 2, field: 7 },
+    { date: "2024-12-13", event: "DEKA World Championships", series: "DEKA", format: "DEKA FIT · F35-39", time: "39:40.3", place: 5, field: 8, pb: true },
+    { date: "2026-10-10", event: "HYROX Boston",    series: "HYROX", format: "Doubles Mixed",     time: "1:08:06", place: 147,  pb: true },
+    { date: "2026-05-28", event: "HYROX New York",  series: "HYROX", format: "Doubles Mixed",     time: "1:24:30", place: 1949 },
     { date: "2026-04-18", event: "HYROX Monterrey", series: "HYROX", format: "Pro Women",         time: "1:41:00", place: 63 },
-    { date: "2026-02-20", event: "HYROX Las Vegas", series: "HYROX", format: "Team Relay Mixed",  time: "1:06:31", place: 19,             partners: "Jim Delorie, Kelly Fuson, Kevin Gregory" },
+    { date: "2026-02-20", event: "HYROX Las Vegas", series: "HYROX", format: "Team Relay Mixed",  time: "1:06:31", place: 19 },
     { date: "2026-02-20", event: "HYROX Las Vegas", series: "HYROX", format: "Pro Women",         time: "1:24:03", place: 106,  pb: true },
-    { date: "2026-01-29", event: "HYROX Phoenix",   series: "HYROX", format: "Pro Doubles Women", time: "1:10:11", place: 52,   pb: true, partners: "Kristine Pavelchak" },
-    { date: "2026-01-29", event: "HYROX Phoenix",   series: "HYROX", format: "Team Relay Mixed",  time: "56:12",   place: 6,    pb: true, partners: "Sam Rao, Kevin Gregory, Karyn Guidry" },
-    { date: "2025-12-20", event: "HYROX Vancouver", series: "HYROX", format: "Pro Doubles Women", time: "1:19:26", place: 31,             partners: "Kelly Fuson" },
-    { date: "2025-02-01", event: "HYROX Las Vegas", series: "HYROX", format: "Doubles Women",     time: "1:08:28", place: 15,   pb: true, partners: "Kristine Pavelchak", field: 687, ageGroupPlace: 2 },
+    { date: "2026-01-29", event: "HYROX Phoenix",   series: "HYROX", format: "Pro Doubles Women", time: "1:10:11", place: 52,   pb: true },
+    { date: "2026-01-29", event: "HYROX Phoenix",   series: "HYROX", format: "Team Relay Mixed",  time: "56:12",   place: 6,    pb: true },
+    { date: "2025-12-20", event: "HYROX Vancouver", series: "HYROX", format: "Pro Doubles Women", time: "1:19:26", place: 31 },
+    { date: "2025-02-01", event: "HYROX Las Vegas", series: "HYROX", format: "Doubles Women",     time: "1:08:28", place: 15,   pb: true, field: 687, ageGroupPlace: 2 },
     { date: "2025-05-30", event: "HYROX New York",  series: "HYROX", format: "Women",             time: "1:12:36", place: 43,   pb: true, field: 1231, ageGroupPlace: 4 },
     { date: "2025-04-26", event: "HYROX Atlanta",   series: "HYROX", format: "Women",             time: "1:15:36", place: 44, field: 810, ageGroupPlace: 15 },
     { date: "2024-11-16", event: "HYROX Chicago Navy Pier", series: "HYROX", format: "Women",     time: "1:15:30", place: 41, field: 594, ageGroupPlace: 11 },
@@ -121,17 +139,42 @@ window.ATHLETE = {
     { event: "DEKA", format: "DEKA FIT (solo)", entries: [
       { date: "2024-12-13", race: "DEKA World Championships", time: "39:40.3", note: "5th in age group (F35-39)" },
     ] },
+    // Doubles and teams (team: true). Partners vary, so these are shown separately.
+    { event: "HYROX", format: "Doubles Women", team: true, entries: [
+      { date: "2025-02-01", race: "HYROX Las Vegas", time: "1:08:28", percentile: "Top 3%", note: "2nd in age group" },
+    ] },
+    { event: "HYROX", format: "Pro Doubles Women", team: true, entries: [
+      { date: "2025-12-20", race: "HYROX Vancouver", time: "1:19:26" },
+      { date: "2026-01-29", race: "HYROX Phoenix", time: "1:10:11" },
+    ] },
+    { event: "HYROX", format: "Doubles Mixed", team: true, entries: [
+      { date: "2026-05-28", race: "HYROX New York", time: "1:24:30" },
+      { date: "2026-10-10", race: "HYROX Boston", time: "1:08:06" },
+    ] },
+    { event: "HYROX", format: "Team Relay Mixed", team: true, entries: [
+      { date: "2026-01-29", race: "HYROX Phoenix", time: "56:12" },
+    ] },
+    { event: "DEKA", format: "DEKA MILE (teams)", team: true, entries: [
+      { date: "2025-07-12", race: "DEKA MILE, G3 Fitness", time: "19:30", note: "2nd co-ed team" },
+      { date: "2026-07-25", race: "DEKA MILE, G3 Fitness", time: "19:01", note: "1st female team" },
+    ] },
+    { event: "DEKA", format: "DEKA FIT (elite pairs)", team: true, entries: [
+      { date: "2026-04-25", race: "DEKA FIT Sacramento", time: "34:43", note: "3rd, Female Elite pairs" },
+      { date: "2026-07-10", race: "DEKA FIT Chicago", time: "33:22", note: "2nd, Co-Ed Elite pairs" },
+    ] },
   ],
 
   // ATHX is too variable for times; list leaderboard finishes instead.
   // segments: per-segment rank among teams in the division.
   athxFinishes: [
-    { event: "ATHX Houston", year: 2026, division: "Mixed pairs", partner: "David Parham", place: 3,
+    { event: "ATHX Houston", year: 2026, division: "Mixed pairs", place: 3, ageGroupPlace: 1,
       segments: [
         { name: "MetCon X", rank: 1, result: "13:22" },
         { name: "Endurance", rank: 2, result: "8.053 km" },
         { name: "Strength", rank: 7, result: "452 kg" },
-      ] },
+      ],
+      // Individual highlights; add the global field size when Jamie sends it
+      individual: ["7th in the world in her age division among endurance athletes"] },
   ],
 
   // From the family calendar. tentative: true shows a "Tentative" label.
@@ -139,8 +182,8 @@ window.ATHLETE = {
     { date: "2026-11-28", event: "ATHX World Finals", series: "ATHX", location: "Lisbon, Portugal", events: ["Teams, overall category"] },
     { date: "2026-12-09", event: "DEKA World Championships", series: "DEKA", location: "", goal: "Return to the Worlds podium",
       events: ["DEKA MILE (individual)", "DEKA FIT (teams)", "DEKA MILE (teams)", "DEKA STRONG (teams)", "DEKA STRONG exhibition (teams, with Shokz)"] },
-    { date: "2026-12-18", event: "HYROX Vancouver", series: "HYROX", location: "Vancouver, BC", tentative: true },
-    { date: "2027-03-26", event: "DEKA Denver", series: "DEKA", location: "Denver, CO", goal: "Gold" },
+    { date: "2026-12-18", event: "HYROX Vancouver", series: "HYROX", location: "Vancouver, BC", events: ["HYROX Pro Doubles Women", "HYROX Doubles Women"] },
+    { date: "2027-03-26", event: "DEKA Denver", series: "DEKA", location: "Denver, CO", goal: "Gold", events: ["Mixed doubles"] },
     { date: "2027-05-01", event: "DEKA Anaheim", series: "DEKA", location: "Anaheim, CA" },
     { date: "2027-05-21", event: "HYROX Portland", series: "HYROX", location: "Portland, OR", goal: "Home-city race" },
   ],
@@ -227,6 +270,7 @@ window.ATHLETE = {
     ],
   },
 
+  podcastsIntro: "Less about fitness: a way to get to know Jamie as a person outside the fitness world, and how she connects with her community.",
   // Podcasts, so brands can hear how Jamie connects with people
   podcasts: [
     { show: "UC Berkeley Haas Podcasts", title: "Leading Digital Transformation with a Global Perspective", url: "https://www.haaspodcasts.org/episodes/onehaas/jamie-lee-mba-18-leading-digital-transformation-with-a-global-perspective" },

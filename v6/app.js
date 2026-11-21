@@ -75,7 +75,6 @@
     " &middot; &copy; " + now.getFullYear();
 
   /* ---------- 1. hero ---------- */
-  $("hero-name").textContent = a.name;
   $("hero-category").textContent = a.category || "";
   var bio = a.instagramBio || a.tagline || a.name;
   var m = bio.match(/^(.*?\bbetween\b)\s+(.*)$/i);
@@ -98,7 +97,8 @@
     var evs = arr(next.events);
     $("startline-meta").innerHTML = [
       next.location ? esc(next.location) : "",
-      evs.length ? esc(evs.length + (evs.length === 1 ? " event" : " events")) : "",
+      // Event names only when they fit comfortably; never a bare count
+      evs.length && evs.length <= 2 && evs.join(", ").length <= 56 ? esc(evs.join(", ")) : "",
       next.tentative ? "Tentative" : "",
     ].filter(Boolean).join('<span class="dot" aria-hidden="true"> · </span>') +
       (next.goal ? '<span class="startline__goal">Goal: <strong>' + esc(next.goal) + "</strong></span>" : "");
@@ -106,7 +106,12 @@
 
   /* ---------- 2. ticker ---------- */
   if (highlights.length) {
-    var tick = highlights.map(function (h) { return '<li class="ticker__item">' + esc(h) + "</li>"; }).join("");
+    // Lean on 2026: those lead and appear twice per loop, the rest are interleaved once
+    var hot = highlights.filter(function (h) { return /2026/.test(h); });
+    var rest = highlights.filter(function (h) { return !/2026/.test(h); });
+    var half = Math.ceil(rest.length / 2);
+    var seq = hot.length ? hot.concat(rest.slice(0, half), hot, rest.slice(half)) : highlights;
+    var tick = seq.map(function (h) { return '<li class="ticker__item' + (/2026/.test(h) ? " is-hot" : "") + '">' + esc(h) + "</li>"; }).join("");
     $("ticker").innerHTML = '<ul class="ticker__run">' + tick + '</ul><ul class="ticker__run" aria-hidden="true">' + tick + "</ul>";
     $("ticker-wrap").hidden = false;
   }
@@ -119,9 +124,16 @@
     return '<div class="stat reveal"><dt class="stat__label">' + esc(s.label) + '</dt><dd class="stat__value">' + esc(s.value) + "</dd></div>";
   }).join("");
   $("stats").style.setProperty("--n", Math.min(stats.length, 6));
+  $("stats").classList.toggle("stats--odd", stats.length % 2 === 1);
 
   /* ---------- 4. athlete · mom · founder ---------- */
-  var recent = highlights.filter(function (h) { return /2026|2027|ATHX|Pro/.test(h) && !/20(1\d|2[0-5])/.test(h); }).slice(0, 4);
+  // Highlights are ordered newest first: take the leading run until one names an earlier year
+  var recent = [];
+  for (var hi = 0; hi < highlights.length; hi++) {
+    if (/20(1\d|2[0-5])/.test(highlights[hi])) break;
+    recent.push(highlights[hi]);
+  }
+  recent = recent.slice(0, 4);
   var site = a.website || null;
   var blurb = site && site.blurb ? site.blurb : "";
   var company = blurb.indexOf(":") > 0 ? blurb.split(":")[0].trim() : "";
@@ -140,8 +152,8 @@
     {
       key: "mom", word: "Bedtime stories", label: "Mom",
       media: img(a.portrait, portraitAlt, "50% 28%"),
-      lede: "Most of her podium finishes have come since becoming a mom.",
-      points: ["Went all in on hybrid racing postpartum", "Trains mostly in her home gym"],
+      lede: a.mom || "Most of her podium finishes have come since becoming a mom.",
+      points: a.mom ? ["Most of her podium finishes have come since becoming a mom", "Raced her first DEKA event nine weeks postpartum"] : ["Went all in on hybrid racing postpartum"],
     },
     {
       key: "founder", word: "Boarding passes", label: "Founder",
@@ -245,17 +257,21 @@
     var best = es.reduce(function (b, e) { return toSec(e.time) < toSec(b.time) ? e : b; }, es[0]);
     return { p: p, es: es, f: es[0], best: best };
   });
-  // PB board: every track's current personal best (single-entry tracks live here only)
-  var board = progs.map(function (t) {
-    var b = t.best;
+  // PB board tile: current personal best; multi-entry tracks also get a compact first -> PB line
+  function tile(t) {
+    var b = t.best, f = t.f, cut = toSec(f.time) - toSec(b.time);
     return '<li class="pbt reveal"><p class="pbt__head"><span class="tag">' + esc(t.p.event) + "</span>" +
       (b.percentile ? '<span class="pct">' + esc(b.percentile) + "</span>" : "") + "</p>" +
-      '<h3 class="pbt__format">' + esc(String(t.p.format || "").replace(/^DEKA\s+(?=DEKA)/, "")) + "</h3>" +
+      '<h4 class="pbt__format">' + esc(t.p.format || "") + "</h4>" +
       '<p class="pbt__time"><span class="sr-only">Personal best: </span>' + esc(b.time) + "</p>" +
       '<p class="pbt__where">' + esc(b.race) + " · " + esc(fmt(b.date, "my")) + "</p>" +
+      (t.es.length > 1 && cut > 0 ? '<p class="pbt__from"><span class="pbt__fromk">First</span> ' + esc(f.time) + ' <span aria-hidden="true">→</span><span class="sr-only"> to </span> PB <strong>−' +
+        esc(cut < 60 ? (Math.round(cut * 10) / 10) + "s" : fmtDur(cut)) + "</strong></p>" : "") +
       (b.note ? '<p class="pb__badge">' + esc(b.note) + "</p>" : "") + "</li>";
-  }).join("");
-  var multi = progs.filter(function (t) { return t.es.length > 1; });
+  }
+  var solo = progs.filter(function (t) { return !t.p.team; });
+  var team = progs.filter(function (t) { return t.p.team; });
+  var multi = solo.filter(function (t) { return t.es.length > 1; });
   var prog = multi.map(function (t, idx) {
     var p = t.p, es = t.es, f = t.f, best = t.best;
     var cut = toSec(f.time) - toSec(best.time);
@@ -286,8 +302,18 @@
       '<div class="pb__viz">' + (es.length > 1 ? '<div class="chart-wrap">' + chart(es, "c" + idx) + "</div>" : "") + '<ol class="steps">' + steps + "</ol></div>" +
     "</article>";
   }).join("");
-  $("pbs").innerHTML = (board ? '<h3 class="perf__k">Personal bests</h3><ul class="board">' + board + "</ul>" : "") +
-    (prog ? '<h3 class="perf__k">First race → personal best</h3><div class="progs">' + prog + "</div>" : "");
+  var html = "";
+  if (solo.length) {
+    html += '<section class="pgroup" aria-labelledby="pg-solo"><h3 class="pgroup__title" id="pg-solo">Solo</h3>' +
+      '<p class="perf__k">Personal bests</p><ul class="board">' + solo.map(tile).join("") + "</ul>" +
+      (prog ? '<p class="perf__k">First race → personal best</p><div class="progs">' + prog + "</div>" : "") + "</section>";
+  }
+  if (team.length) {
+    html += '<section class="pgroup" aria-labelledby="pg-team"><h3 class="pgroup__title" id="pg-team">Doubles &amp; teams</h3>' +
+      '<p class="pgroup__note">Partners change from race to race, so team times are tracked on their own.</p>' +
+      '<ul class="board board--team">' + team.map(tile).join("") + "</ul></section>";
+  }
+  $("pbs").innerHTML = html;
 
   var athx = arr(a.athxFinishes);
   if (athx.length) {
@@ -297,11 +323,14 @@
       var place = r.place != null ? r.place : r.finish != null ? r.finish : r.position;
       var placeTxt = place == null ? "" : typeof place === "number" ? ordinal(place) : String(place);
       var segs = arr(r.segments);
+      var indiv = arr(r.individual);
+      var ag = r.ageGroupPlace, agTxt = ag == null ? "" : typeof ag === "number" ? ordinal(ag) : String(ag);
+      var lead = agTxt ? '<p class="athx__place">' + esc(agTxt) + "<span>in age group</span></p>" : placeTxt ? '<p class="athx__place">' + esc(placeTxt) + "<span>overall</span></p>" : "";
       return '<li class="athx__item">' +
-        '<div class="athx__main">' +
-          (placeTxt ? '<p class="athx__place">' + esc(placeTxt) + '<span>overall</span></p>' : "") +
+        '<div class="athx__main">' + lead +
           '<div><h4 class="athx__ev">' + esc(r.event || r.race || r.name || "") + "</h4>" +
-          '<p class="athx__meta">' + esc([r.division || r.category || r.format, r.partner ? "with " + r.partner : "", r.date ? fmt(r.date, "my") : r.year, r.note].filter(Boolean).join(" · ")) + "</p></div>" +
+          (agTxt && placeTxt ? '<p class="athx__overall"><strong>' + esc(placeTxt) + "</strong> overall</p>" : "") +
+          '<p class="athx__meta">' + esc([r.division || r.category || r.format, r.date ? fmt(r.date, "my") : r.year, r.note].filter(Boolean).join(" · ")) + "</p></div>" +
         "</div>" +
         (segs.length ? '<ol class="segs">' + segs.map(function (g) {
           var win = Number(g.rank) === 1;
@@ -309,6 +338,7 @@
             '<span class="seg__name">' + esc(g.name) + (win ? ' <span class="seg__flag">Segment win</span>' : "") + "</span>" +
             (g.result ? '<span class="seg__res">' + esc(g.result) + "</span>" : "") + "</li>";
         }).join("") + "</ol>" : "") +
+        (indiv.length ? '<div class="athx__ind"><p class="athx__indk">Individual</p><ul>' + indiv.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>" : "") +
       "</li>";
     }).join("");
   }
@@ -326,7 +356,7 @@
           (u.tentative ? '<span class="tag tag--tent">Tentative</span>' : "") + "</p>" +
         '<h3 class="race__name">' + esc(u.event) + "</h3>" +
         '<p class="race__loc">' + (u.location ? esc(u.location) : "Location to be announced") + "</p>" +
-        (evs.length ? '<div class="race__evs"><p class="race__evs-k">' + evs.length + (evs.length === 1 ? " event" : " events") + '</p><ul>' +
+        (evs.length ? '<div class="race__evs">' + (evs.length > 1 ? '<p class="race__evs-k">' + evs.length + " events</p>" : "") + "<ul>" +
           evs.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul></div>" : "") +
       "</div>" +
       (u.goal ? '<p class="race__goal"><span>Goal</span>' + esc(u.goal) + "</p>" : '<p class="race__goal race__goal--empty" aria-hidden="true"></p>') +
@@ -372,6 +402,8 @@
 
   /* ---------- 10. podcasts ---------- */
   var pods = arr(a.podcasts);
+  if (a.podcastsIntro) $("hear-intro").textContent = a.podcastsIntro;
+  else $("hear-intro").remove();
   if (pods.length) {
     $("hear").hidden = false;
     var wave = '<svg class="pod__wave" viewBox="0 0 120 32" aria-hidden="true">' +
@@ -467,6 +499,47 @@
       [].forEach.call(document.querySelectorAll(".reveal"), function (el) { el.classList.add("is-in"); });
     });
   }
+
+  /* ---------- color theme switcher ---------- */
+  var THEMES = [
+    { id: "volt", name: "Volt", note: "Neon on black", bg: "#0a0a0b", ac: "#d7ff3a", meta: "#0a0a0b" },
+    { id: "flare", name: "Flare", note: "Hot coral on black", bg: "#0b0a0a", ac: "#ff5a36", meta: "#0b0a0a" },
+    { id: "electric", name: "Electric", note: "Cyan on navy", bg: "#070f1f", ac: "#2de2ff", meta: "#070f1f" },
+    { id: "chalk", name: "Chalk", note: "Light, orange accents", bg: "#f3f1eb", ac: "#ff5b1f", meta: "#f3f1eb" },
+  ];
+  var root = document.documentElement, panel = $("themer-panel"), tbtn = $("themer-btn");
+  var metaTheme = document.querySelector('meta[name="theme-color"]');
+  function applyTheme(id, save) {
+    var t = THEMES.filter(function (x) { return x.id === id; })[0] || THEMES[0];
+    root.setAttribute("data-theme", t.id);
+    if (metaTheme) metaTheme.setAttribute("content", t.meta);
+    if (save) { try { localStorage.setItem("jl-theme", t.id); } catch (e) {} }
+    [].forEach.call(panel.querySelectorAll("button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-id") === t.id)); });
+  }
+  panel.innerHTML = '<p class="themer__title">Color theme</p>' + THEMES.map(function (t) {
+    return '<button type="button" class="themer__opt" data-theme-id="' + t.id + '" aria-pressed="false">' +
+      '<span class="themer__sw" aria-hidden="true" style="background:' + t.bg + '"><i style="background:' + t.ac + '"></i></span>' +
+      '<span class="themer__txt"><strong>' + esc(t.name) + "</strong><small>" + esc(t.note) + "</small></span></button>";
+  }).join("");
+  function setOpen(open) {
+    panel.hidden = !open;
+    tbtn.setAttribute("aria-expanded", String(open));
+    if (open) { var cur = panel.querySelector('[aria-pressed="true"]') || panel.querySelector("button"); cur.focus(); }
+  }
+  tbtn.addEventListener("click", function () { setOpen(panel.hidden); });
+  panel.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-theme-id]");
+    if (b) applyTheme(b.getAttribute("data-theme-id"), true);
+  });
+  $("themer").addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !panel.hidden) { setOpen(false); tbtn.focus(); }
+    if ((e.key === "ArrowDown" || e.key === "ArrowUp") && !panel.hidden) {
+      var opts = [].slice.call(panel.querySelectorAll("button")), i = opts.indexOf(document.activeElement);
+      if (i > -1) { e.preventDefault(); opts[(i + (e.key === "ArrowDown" ? 1 : -1) + opts.length) % opts.length].focus(); }
+    }
+  });
+  document.addEventListener("click", function (e) { if (!panel.hidden && !$("themer").contains(e.target)) setOpen(false); });
+  applyTheme(root.getAttribute("data-theme") || "volt", false);
 
   /* ---------- nav state ---------- */
   var nav = $("nav");
