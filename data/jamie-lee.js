@@ -139,6 +139,10 @@ window.ATHLETE = {
     { event: "DEKA", format: "DEKA FIT (solo)", entries: [
       { date: "2024-12-13", race: "DEKA World Championships", time: "39:40.3", note: "5th in age group (F35-39)" },
     ] },
+    // Road races (add half marathon and faster 5Ks as Jamie sends them)
+    { event: "Road", format: "5K", entries: [
+      { date: "2023-09-17", race: "MLK Dream Run, Portland", time: "22:56", percentile: "Top 4%", note: "6th of 160 women" },
+    ] },
     // Doubles and teams (team: true). Partners vary, so these are shown separately.
     { event: "HYROX", format: "Doubles Women", team: true, entries: [
       { date: "2025-02-01", race: "HYROX Las Vegas", time: "1:08:28", percentile: "Top 3%", note: "2nd in age group" },
